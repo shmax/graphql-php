@@ -74,7 +74,7 @@ class Schema
     public $extensionASTNodes;
 
     /**
-     * @param mixed[]|SchemaConfig $config
+     * @param mixed|SchemaConfig $config
      *
      * @api
      */
