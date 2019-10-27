@@ -129,14 +129,15 @@ class EnumType extends Type implements InputType, OutputType, LeafType, Nullable
                     throw new InvariantViolation(sprintf('%s values must be an array', $this->name));
                 }
                 foreach ($config['values'] as $name => $value) {
-                    if (is_string($name)) {
+                    if (is_int($name) && is_string($value)) {
+                        $value = ['name' => $value, 'value' => $value];
+                    }
+                    elseif (is_string($name)) {
                         if (is_array($value)) {
                             $value += ['name' => $name, 'value' => $name];
                         } else {
                             $value = ['name' => $name, 'value' => $value];
                         }
-                    } elseif (is_int($name) && is_string($value)) {
-                        $value = ['name' => $value, 'value' => $value];
                     } else {
                         throw new InvariantViolation(
                             sprintf(

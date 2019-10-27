@@ -46,9 +46,10 @@ class Directive
     /**
      * @param array{
      *      args: array<string,array|FieldArgument>,
+     *      astNode?: DirectiveDefinitionNode,
      *      description?: string,
      *      locations?: array<string>,
-     *      name: string
+     *      name?: string
      * } $config
      */
     public function __construct(array $config)
@@ -65,12 +66,16 @@ class Directive
             $this->args = $args;
             unset($config['args']);
         }
-        foreach ($config as $key => $value) {
-            $this->{$key} = $value;
-        }
 
-        Utils::invariant($this->name, 'Directive must be named.');
-        Utils::invariant(is_array($this->locations), 'Must provide locations for directive.');
+        $this->description = $config['description'] ?? null;
+        $this->astNode = $config['astNode'] ?? null;
+
+        Utils::invariant($config['name'] ?? null, 'Directive must be named.');
+        $this->name = $config['name'];
+
+        Utils::invariant(is_array($config['locations'] ?? null), 'Must provide locations for directive.');
+        $this->locations = $config['locations'];
+
         $this->config = $config;
     }
 
