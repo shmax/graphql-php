@@ -184,7 +184,7 @@ abstract class Type implements JsonSerializable
     }
 
     /**
-     * @param array<string,ScalarType> $types
+     * @param array<string,ScalarType|mixed> $types
      */
     public static function overrideStandardTypes(array $types)
     {
@@ -217,7 +217,7 @@ abstract class Type implements JsonSerializable
     }
 
     /**
-     * @param Type $type
+     * @param ?Type $type
      * @api
      */
     public static function getNamedType($type): ?Type
@@ -274,31 +274,6 @@ abstract class Type implements JsonSerializable
     public static function isAbstractType($type) : bool
     {
         return $type instanceof AbstractType;
-    }
-
-    /**
-     * @param mixed $type
-     *
-     * @return mixed
-     */
-    public static function assertType($type)
-    {
-        Utils::invariant(
-            self::isType($type),
-            'Expected ' . Utils::printSafe($type) . ' to be a GraphQL type.'
-        );
-
-        return $type;
-    }
-
-    /**
-     * @param Type $type
-     *
-     * @api
-     */
-    public static function isType($type) : bool
-    {
-        return $type instanceof Type;
     }
 
     /**

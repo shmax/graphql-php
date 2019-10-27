@@ -185,12 +185,10 @@ class DefinitionTest extends TestCase
         $articleFieldType = $articleField->getType();
         $titleField       = $articleFieldType->getField('title');
 
-        self::assertInstanceOf('GraphQL\Type\Definition\FieldDefinition', $titleField);
         self::assertSame('title', $titleField->name);
         self::assertSame(Type::string(), $titleField->getType());
 
         $authorField = $articleFieldType->getField('author');
-        self::assertInstanceOf('GraphQL\Type\Definition\FieldDefinition', $authorField);
 
         /** @var ObjectType $authorFieldType */
         $authorFieldType = $authorField->getType();

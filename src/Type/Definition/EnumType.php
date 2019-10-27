@@ -24,8 +24,22 @@ class EnumType extends Type implements InputType, OutputType, LeafType, Nullable
     /** @var EnumTypeDefinitionNode|null */
     public $astNode;
 
-    /** @var EnumValueDefinition[] */
+    /** @var ?array<EnumValueDefinition> */
     private $values;
+
+    /**
+     * @var array{
+     *      name?: string,
+     *      description?: string,
+     *      astNode?: EnumTypeDefinitionNode,
+     *      extensionASTNodes?: array<EnumTypeExtensionNode>,
+     *      values: array<string|int,string|array{
+     *          description?:string,
+     *          value: mixed
+     *      }>
+     * }
+     */
+    public $config;
 
     /**
      * Actually a MixedStore<mixed, EnumValueDefinition>, PHPStan won't let us type it that way
@@ -34,7 +48,7 @@ class EnumType extends Type implements InputType, OutputType, LeafType, Nullable
      */
     private $valueLookup;
 
-    /** @var ArrayObject<string, EnumValueDefinition> */
+    /** @var ?ArrayObject<string, EnumValueDefinition> */
     private $nameLookup;
 
     /** @var EnumTypeExtensionNode[] */
@@ -46,7 +60,11 @@ class EnumType extends Type implements InputType, OutputType, LeafType, Nullable
      *      name?: string,
      *      description?: string,
      *      astNode?: EnumTypeDefinitionNode,
-     *      extensionASTNodes?: array<EnumTypeExtensionNode>
+     *      extensionASTNodes?: array<EnumTypeExtensionNode>,
+     *      values: array<string|int,string|array{
+     *          description?:string,
+     *          value: mixed
+     *      }>
      * } $config
      */
     public function __construct($config)

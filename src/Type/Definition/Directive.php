@@ -45,9 +45,9 @@ class Directive
 
     /**
      * @param array{
-     *      args: array|FieldArgument[],
+     *      args: array<string,array|FieldArgument>,
      *      description?: string,
-     *      locations: array<string>,
+     *      locations?: array<string>,
      *      name: string
      * } $config
      */
