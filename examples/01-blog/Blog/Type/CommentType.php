@@ -21,8 +21,8 @@ class CommentType extends ObjectType
                 'author' => [
                     'type' => Types::user(),
                     'resolve' => static fn (Comment $comment): ?User => $comment->isAnonymous
-                            ? null
-                            : DataSource::findUser($comment->authorId),
+                        ? null
+                        : DataSource::findUser($comment->authorId),
                 ],
                 'parent' => [
                     'type' => Types::comment(),
@@ -40,7 +40,7 @@ class CommentType extends ObjectType
                             'defaultValue' => 5,
                         ],
                     ],
-                    'resolve' => static fn (Comment $comment, array $args): array => DataSource::findReplies($comment->id, $args['limit'], $args['after'] ?? null),
+                    'resolve' => fn (Comment $comment, array $args): array => DataSource::findReplies($comment->id, $args['limit'], $args['after'] ?? null),
                 ],
                 'totalReplyCount' => [
                     'type' => Types::int(),
