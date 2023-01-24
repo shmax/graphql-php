@@ -40,11 +40,7 @@ class CommentType extends ObjectType
                             'defaultValue' => 5,
                         ],
                     ],
-                    'resolve' => function (Comment $comment, array $args): array {
-                        $args += ['after' => null];
-
-                        return DataSource::findReplies($comment->id, $args['limit'], $args['after']);
-                    },
+                    'resolve' => static fn (Comment $comment, array $args): array => DataSource::findReplies($comment->id, $args['limit'], $args['after'] ?? null),
                 ],
                 'totalReplyCount' => [
                     'type' => Types::int(),
