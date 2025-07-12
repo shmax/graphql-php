@@ -20,21 +20,22 @@ use Symfony\Component\Cache\Psr16Cache;
 final class SpyValidationCacheAdapter extends PsrValidationCacheAdapter
 {
     public int $isValidatedCalls = 0;
+
     public int $markValidatedCalls = 0;
 
     public function isValidated(Schema $schema, DocumentNode $ast): bool
     {
-        $this->isValidatedCalls++;
+        ++$this->isValidatedCalls;
+
         return parent::isValidated($schema, $ast);
     }
 
     public function markValidated(Schema $schema, DocumentNode $ast): void
     {
-        $this->markValidatedCalls++;
+        ++$this->markValidatedCalls;
         parent::markValidated($schema, $ast);
     }
 }
-
 
 final class ValidationWithCacheTest extends TestCase
 {
@@ -99,8 +100,8 @@ final class ValidationWithCacheTest extends TestCase
         }';
 
         // make the same call twice in a row. We'll then inspect the cache object to count calls
-        GraphQL::executeQuery( $schema, $query, null, null, null, null, null, null, $cache)->toArray();
-        $result = GraphQL::executeQuery( $schema, $query, null, null, null, null, null, null, $cache)->toArray();
+        GraphQL::executeQuery($schema, $query, null, null, null, null, null, null, $cache)->toArray();
+        $result = GraphQL::executeQuery($schema, $query, null, null, null, null, null, null, $cache)->toArray();
 
         // ✅ Assert that validation only happened once
         self::assertEquals(2, $cache->isValidatedCalls, 'Should check cache twice');

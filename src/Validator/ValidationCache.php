@@ -18,8 +18,6 @@ interface ValidationCache
      */
     public function isValidated(Schema $schema, DocumentNode $ast): bool;
 
-    /**
-     * Cache validation status for this schema/query.
-     */
+    /** Cache validation status for this schema/query. */
     public function markValidated(Schema $schema, DocumentNode $ast): void;
 }
